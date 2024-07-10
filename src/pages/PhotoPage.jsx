@@ -30,13 +30,13 @@ export const PhotoPage = () => {
 				className='flex gap-3 items-center justify-center mt-8'
 			>
 				<figure className='flex flex-col'>
-					{load ? (
+					{!load ? (
 						<span className='flex flex-col items-center w-3 m-3 justify-center'>
 							<Spinner />
 						</span>
 					) : (
 						<img
-							className='w-8'
+							className='w-8 '
 							src='assets\search-alt-svgrepo-com.svg'
 							alt=''
 						/>
