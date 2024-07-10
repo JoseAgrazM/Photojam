@@ -6,7 +6,7 @@ export const Photojam = () => {
 	return (
 		<Routes>
 			<Route path='/auth/*' element={<AuthRoutes />} />
-			<Route path='/' element={<PhotojamRoutes />} />
+			<Route path='/*' element={<PhotojamRoutes />} />
 
 			<Route path='/*' element={<Navigate to='/' />} />
 		</Routes>
