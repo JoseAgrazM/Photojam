@@ -10,10 +10,12 @@ export const Navbar = () => {
 					<NavLink to='/favs'>Favourites</NavLink>
 				</ul>
 				<div className='flex gap-2'>
-					<button>Login</button>
+					<NavLink to='/auth/login'>Login</NavLink>
+
 					<span>|</span>
-					<NavLink to='/register'>Register</NavLink>
+					<NavLink to='/auth/register'>Register</NavLink>
 				</div>
+
 				{/* <div className="flex gap-2">
 					<button>Jose</button>
 					<span>|</span>

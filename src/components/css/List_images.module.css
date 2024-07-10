@@ -1,0 +1,10 @@
+.list_images {
+    margin-top: 44px;
+    margin-left: 10px;
+    margin-right: 10px;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 14px;
+}

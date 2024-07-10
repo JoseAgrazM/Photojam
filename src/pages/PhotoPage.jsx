@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { ImageGrid, Navbar } from '../components';
-import { useForm } from '../hooks';
+import { Footer, ImageGrid, Navbar, Spinner } from '../components';
+import { useFetch, useForm } from '../hooks';
 import queryString from 'query-string';
-import { Spinner } from '../components/Spinner';
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const PhotoPage = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const { q = '' } = queryString.parse(location.search);
 
@@ -13,24 +15,32 @@ export const PhotoPage = () => {
 		imageSearch: q,
 	});
 
+	const { data, isLoading, hasError, error } = useFetch(
+		useMemo(
+			() =>
+				`https://api.unsplash.com/search/photos?query=${q}&client_id=${
+					import.meta.env.VITE_ACCESS_KEY
+				}`,
+			[q]
+		)
+	);
+	const images = data?.results;
+
 	const onSubmit = e => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
 		navigate(`?q=${imageSearch.trim()}`);
 	};
 
-	const load = true;
-
 	return (
 		<>
 			<Navbar />
-
 			<form
 				onSubmit={onSubmit}
 				className='flex gap-3 items-center justify-center mt-8'
 			>
 				<figure className='flex flex-col'>
-					{!load ? (
+					{isLoading ? (
 						<span className='flex flex-col items-center w-3 m-3 justify-center'>
 							<Spinner />
 						</span>
@@ -50,8 +60,10 @@ export const PhotoPage = () => {
 					className='text-2xl rounded'
 				/>
 			</form>
-
-			<ImageGrid />
+			<section className='flex flex-col min-h-screen'>
+				<ImageGrid images={images} isLoading={isLoading} />
+			</section>
+			<Footer />
 		</>
 	);
 };
