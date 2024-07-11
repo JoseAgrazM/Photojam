@@ -5,3 +5,6 @@ export * from './Footer';
 export * from './SearchImages';
 export * from './NotFound';
 export * from './Spinner';
+export * from './CheckingAuth';
+export * from './FavouritesMessage';
+export * from './VoidFavs';

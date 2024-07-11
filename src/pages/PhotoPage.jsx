@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Footer, ImageGrid, Navbar, Spinner } from '../components';
-import { useFetch, useForm } from '../hooks';
+import { useFetch, useForm, useSearch } from '../hooks';
 import queryString from 'query-string';
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -11,7 +11,7 @@ export const PhotoPage = () => {
 
 	const { q = '' } = queryString.parse(location.search);
 
-	const { imageSearch, onInputChange } = useForm({
+	const { imageSearch, onInputChange } = useSearch({
 		imageSearch: q,
 	});
 
@@ -20,7 +20,7 @@ export const PhotoPage = () => {
 			() =>
 				`https://api.unsplash.com/search/photos?query=${q}&client_id=${
 					import.meta.env.VITE_ACCESS_KEY
-				}`,
+				}&limit=2`,
 			[q]
 		)
 	);
@@ -59,6 +59,7 @@ export const PhotoPage = () => {
 					onChange={onInputChange}
 					className='text-2xl rounded'
 				/>
+				<button className='bg-indigo-600 px-3 py-1 rounded text-white' onSubmit={onSubmit}>Send</button>
 			</form>
 			<section className='flex flex-col min-h-screen'>
 				<ImageGrid images={images} isLoading={isLoading} />

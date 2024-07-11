@@ -20,6 +20,9 @@
 .button_download {
 	transform: scale(0);
 }
+.button_view {
+	transform: scale(0);
+}
 
 .figure:hover {
 	--animation-before: translate(1);
@@ -42,6 +45,20 @@
 		bottom: 20px;
 		right: 20px;
 		width: 25px;
+		z-index: 30;
+		transform: scale(1);
+		transition: 1s;
+	}
+	& .button_view {
+		display: flex;
+		position: absolute;
+		width: 45px;
+		padding: 3px;
+		bottom: 10px;
+		right: 40%;
+		justify-content: center;
+		background-color: white;
+		border-radius: 11px;
 		z-index: 30;
 		transform: scale(1);
 		transition: 1s;
