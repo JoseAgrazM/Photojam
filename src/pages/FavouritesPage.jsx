@@ -9,8 +9,9 @@ import {
 
 export const FavouritesPage = () => {
 	const { status } = useSelector(state => state.auth);
+	const { photoFavs, isSaving } = useSelector(state => state.photojam);
 
-	const isVoid = true;
+	// console.log(photoFavs.length > 0);
 
 	return (
 		<>
@@ -19,10 +20,10 @@ export const FavouritesPage = () => {
 			<div className='flex flex-col min-h-screen'>
 				<section className='flex flex-col min-h-screen'>
 					{status === 'authenticated' ? (
-						isVoid ? (
-							<VoidFavs />
+						photoFavs?.length > 0 ? (
+							<ImageGrid images={photoFavs} isLoading={false} />
 						) : (
-							<ImageGrid />
+							<VoidFavs />
 						)
 					) : (
 						<FavouritesMessage />

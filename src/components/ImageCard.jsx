@@ -1,6 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './css/ImageCard.module.css';
 import { useState } from 'react';
+import { startAddPhotoFav, startDeleteFavs } from '../photojam/store/photojam';
+import { existPhotoId } from '../helpers';
+import { downloadImage } from '../helpers/downloafImage';
 
 export const ImageCard = ({
 	alt_description,
@@ -8,45 +11,77 @@ export const ImageCard = ({
 	description,
 	links,
 	urls,
+	id,
+	title,
+	urlImage,
+	date,
 }) => {
-	const [activeImage, setActiveImage] = useState(false);
+	const dispatch = useDispatch();
 
-	const { status, displayName } = useSelector(state => state.auth);
+	const { status } = useSelector(state => state.auth);
+	const { isSaving } = useSelector(state => state.photojam);
 
-	const imageFull = urls.full;
+	const imageFull = urls?.full;
+	const { download_location } = links;
 
-	const active = true;
+	const photo = {
+		id,
+		alt_description,
+		imageFull,
+	};
+
+	const onAddFav = () => {
+		dispatch(startAddPhotoFav(photo));
+	};
+	const onDeleteFav = () => {
+		dispatch(startDeleteFavs(id));
+	};
+
+	const onDownloadImage = () => {
+		downloadImage(download_location);
+	};
+
+	const isPhotoFav = existPhotoId(id);
 
 	return (
 		<>
 			<figure className={styles.figure}>
 				<img
 					className={styles.image}
-					src={imageFull}
+					src={imageFull || urlImage}
 					alt={alt_description}
 				/>
 				{status === 'authenticated' ? (
-					<button className={styles.button_heart}>
-						{active ? (
-							<img
-								src='assets\outline-heart.svg'
-								alt='outline-heart'
-							/>
-						) : (
+					isPhotoFav ? (
+						<button
+							disabled={isSaving}
+							onClick={onDeleteFav}
+							className={styles.button_heart}
+						>
 							<img
 								src='assets\stuffed-heard.svg'
 								alt='stuffed-heard'
 							/>
-						)}
-					</button>
+						</button>
+					) : (
+						<button
+							disabled={isSaving}
+							onClick={onAddFav}
+							className={styles.button_heart}
+						>
+							<img
+								src='assets\outline-heart.svg'
+								alt='outline-heart'
+							/>
+						</button>
+					)
 				) : null}
 
+				<button className={styles.button_view}>View</button>
 				<button
-					className={styles.button_view}
+					onClick={onDownloadImage}
+					className={styles.button_download}
 				>
-					View
-				</button>
-				<button className={styles.button_download}>
 					<img src='assets\download-svgrepo-com.svg' alt='download' />
 				</button>
 			</figure>

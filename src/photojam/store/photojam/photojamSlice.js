@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const photojamSlice = createSlice({
 	name: 'photojam',
 	initialState: {
-		isSaving: '',
+		isSaving: false,
 		messageSave: '',
 		photoFavs: [],
 	},
@@ -21,9 +21,12 @@ export const photojamSlice = createSlice({
 			state.photoFavs = action.payload;
 		},
 
-        updatePhoto: (state, action) => {
-            
-        },
+		deletePhotoById: (state, action) => {
+			state.photoFavs = state.photoFavs.filter(
+				photo => photo.id !== action.payload
+			);
+			state.isSaving = false;
+		},
 
 		clearPhotosLogout: (state, action) => {
 			state.isSaving = false;
@@ -34,4 +37,10 @@ export const photojamSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment } = photojamSlice.actions;
+export const {
+	savingPhotoFav,
+	addNewPhotoFav,
+	setPhotosFav,
+	deletePhotoById,
+	clearPhotosLogout,
+} = photojamSlice.actions;

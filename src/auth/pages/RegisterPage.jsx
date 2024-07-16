@@ -3,11 +3,13 @@ import { LayoutAuth } from '../Layouts/LayoutAuth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks';
+import {} from '../../firebase/providers';
+import { startCreatingUserWithEmailPassword } from '../../photojam/store/auth/thunks';
 
 const formData = {
-	displayName: '',
-	email: '',
-	password: '',
+	displayName: 'Jose Agraz',
+	email: 'jose@google.com',
+	password: '123456',
 };
 
 export const RegisterPage = () => {
@@ -27,9 +29,9 @@ export const RegisterPage = () => {
 	const onSubmit = event => {
 		event.preventDefault();
 		setFormSubmitted(true);
-	};
 
-	
+		dispatch(startCreatingUserWithEmailPassword(formData));
+	};
 
 	return (
 		<LayoutAuth title='Register'>
@@ -90,7 +92,7 @@ export const RegisterPage = () => {
 				<span className='text-lg'>Have an account already?</span>
 				<Link
 					to='/auth/login'
-					className='text-lg font-medium text-blue-900 underline underline-offset-4'
+					className='text-lg font-medium text-white underline underline-offset-4'
 				>
 					Sign in
 				</Link>

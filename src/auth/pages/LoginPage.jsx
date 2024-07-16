@@ -2,7 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LayoutAuth } from '../Layouts/LayoutAuth';
 import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks';
-import { startGoogleSingIn } from '../../photojam/store/auth';
+import {
+	startGoogleSingIn,
+	startLoginUserWithEmail,
+} from '../../photojam/store/auth';
 
 const formData = {
 	email: '',
@@ -18,7 +21,7 @@ export const LoginPage = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault();
-		await console.log('Logisn');
+		dispatch(startLoginUserWithEmail(formState));
 	};
 
 	const onGoogleSingin = () => {
