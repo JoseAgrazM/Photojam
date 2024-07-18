@@ -11,8 +11,6 @@ export const FavouritesPage = () => {
 	const { status } = useSelector(state => state.auth);
 	const { photoFavs, isSaving } = useSelector(state => state.photojam);
 
-	// console.log(photoFavs.length > 0);
-
 	return (
 		<>
 			<Navbar />

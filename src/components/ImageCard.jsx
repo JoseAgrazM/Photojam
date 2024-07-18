@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { startAddPhotoFav, startDeleteFavs } from '../photojam/store/photojam';
 import { existPhotoId } from '../helpers';
 import { downloadImage } from '../helpers/downloafImage';
+import { saveAs } from 'file-saver';
 
 export const ImageCard = ({
 	alt_description,
@@ -15,6 +16,7 @@ export const ImageCard = ({
 	title,
 	urlImage,
 	date,
+	urlDownload,
 }) => {
 	const dispatch = useDispatch();
 
@@ -22,12 +24,14 @@ export const ImageCard = ({
 	const { isSaving } = useSelector(state => state.photojam);
 
 	const imageFull = urls?.full;
-	const { download_location } = links;
+
+	// console.log(links?.download_location);
 
 	const photo = {
 		id,
 		alt_description,
 		imageFull,
+		links,
 	};
 
 	const onAddFav = () => {
@@ -38,7 +42,7 @@ export const ImageCard = ({
 	};
 
 	const onDownloadImage = () => {
-		downloadImage(download_location);
+		saveAs(urlImage, 'image.jpg');
 	};
 
 	const isPhotoFav = existPhotoId(id);

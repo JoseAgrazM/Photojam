@@ -1,9 +1,9 @@
 import { NotFound, Spinner, SearchImages, ImageCard } from './';
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from './css/List_images.module.css';
 
 export const ImageGrid = ({ images, isLoading }) => {
-
 	return (
 		<div className='w-full'>
 			{isLoading ? (
@@ -19,7 +19,7 @@ export const ImageGrid = ({ images, isLoading }) => {
 					{images.map(img => (
 						<li
 							className='flex items-center justify-center animate__animated animate__fadeInUp'
-							key={img.id}
+							key={uuidv4()}
 						>
 							<ImageCard {...img} />
 						</li>

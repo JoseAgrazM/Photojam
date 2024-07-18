@@ -1,11 +1,16 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Footer, ImageGrid, Navbar, Spinner } from '../components';
 import { useFetch, useSearch } from '../hooks';
 import queryString from 'query-string';
-import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export const PhotoPage = () => {
+	const [showLoaderImage, setShowLoaderImage] = useState(false);
+	const [page, setPage] = useState(1);
+	const [allImages, setAllImages] = useState([]);
+
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -15,21 +20,33 @@ export const PhotoPage = () => {
 		imageSearch: q,
 	});
 
-	const { data, isLoading, hasError, error } = useFetch(
-		useMemo(
-			() =>
-				`${import.meta.env.VITE_URL}?query=${q}&client_id=${
-					import.meta.env.VITE_ACCESS_KEY
-				}`,
-			[q]
-		)
+	const fetchUrl = useMemo(
+		() =>
+			`${import.meta.env.VITE_URL}?query=${q || null}&client_id=${
+				import.meta.env.VITE_ACCESS_KEY
+			}&page=${page}`,
+		[q, page]
 	);
-	const images = data?.results;
+
+	const { data, isLoading, hasError, error } = useFetch(fetchUrl);
+
+	useEffect(() => {
+		if (data?.results) {
+			setAllImages(prevImages =>
+				page === 1 ? data.results : [...prevImages, ...data.results]
+			);
+		}
+	}, [data, page]);
 
 	const onSubmit = e => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
 		navigate(`?q=${imageSearch.trim()}`);
+		setPage(1); // Reset page to 1 on new search
+	};
+
+	const fetchMoreData = () => {
+		setPage(prevPage => prevPage + 1);
 	};
 
 	return (
@@ -40,14 +57,14 @@ export const PhotoPage = () => {
 				className='flex gap-3 items-center justify-center mt-8'
 			>
 				<figure className='flex flex-col'>
-					{isLoading ? (
+					{isLoading && page === 1 ? (
 						<span className='flex flex-col items-center w-3 m-3 justify-center'>
 							<Spinner />
 						</span>
 					) : (
 						<img
 							className='w-8 '
-							src='assets\search-alt-svgrepo-com.svg'
+							src='assets/search-alt-svgrepo-com.svg'
 							alt=''
 						/>
 					)}
@@ -61,14 +78,26 @@ export const PhotoPage = () => {
 				/>
 				<button
 					className='bg-indigo-600 px-3 py-1 rounded text-white'
-					onSubmit={onSubmit}
+					type='submit'
 				>
 					Send
 				</button>
 			</form>
-			<section className='flex flex-col min-h-screen'>
-				<ImageGrid images={images} isLoading={isLoading} />
-			</section>
+
+			<InfiniteScroll
+				dataLength={allImages.length}
+				next={fetchMoreData}
+				hasMore={true}
+				loader={<LoaderImage />}
+			>
+				<section className='flex flex-col min-h-screen'>
+					{showLoaderImage ? (
+						<LoaderImage />
+					) : (
+						<ImageGrid images={allImages} />
+					)}
+				</section>
+			</InfiniteScroll>
 			<Footer />
 		</>
 	);
