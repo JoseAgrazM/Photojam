@@ -7,9 +7,9 @@ import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 export const PhotoPage = () => {
-	const [showLoaderImage, setShowLoaderImage] = useState(false);
 	const [page, setPage] = useState(1);
 	const [allImages, setAllImages] = useState([]);
+	const [isLoadingMore, setIsLoadingMore] = useState(false);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -33,8 +33,20 @@ export const PhotoPage = () => {
 	useEffect(() => {
 		if (data?.results) {
 			setAllImages(prevImages =>
-				page === 1 ? data.results : [...prevImages, ...data.results]
+				page === 1
+					? [...data.results]
+					: [
+							...prevImages,
+							...data.results.filter(
+								newImage =>
+									!prevImages.some(
+										prevImage =>
+											prevImage.id === newImage.id
+									)
+							),
+					  ]
 			);
+			setIsLoadingMore(false);
 		}
 	}, [data, page]);
 
@@ -42,11 +54,15 @@ export const PhotoPage = () => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
 		navigate(`?q=${imageSearch.trim()}`);
-		setPage(1); // Reset page to 1 on new search
+		setPage(1);
+		setAllImages([]);
 	};
 
 	const fetchMoreData = () => {
-		setPage(prevPage => prevPage + 1);
+		if (!isLoadingMore) {
+			setIsLoadingMore(true);
+			setPage(page => page + 1);
+		}
 	};
 
 	return (
@@ -57,7 +73,7 @@ export const PhotoPage = () => {
 				className='flex gap-3 items-center justify-center mt-8'
 			>
 				<figure className='flex flex-col'>
-					{isLoading && page === 1 ? (
+					{isLoading ? (
 						<span className='flex flex-col items-center w-3 m-3 justify-center'>
 							<Spinner />
 						</span>
@@ -90,12 +106,9 @@ export const PhotoPage = () => {
 				hasMore={true}
 				loader={<LoaderImage />}
 			>
+				{console.log(allImages, page)}
 				<section className='flex flex-col min-h-screen'>
-					{showLoaderImage ? (
-						<LoaderImage />
-					) : (
-						<ImageGrid images={allImages} />
-					)}
+					<ImageGrid images={allImages} />
 				</section>
 			</InfiniteScroll>
 			<Footer />

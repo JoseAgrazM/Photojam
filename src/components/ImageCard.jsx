@@ -25,8 +25,6 @@ export const ImageCard = ({
 
 	const imageFull = urls?.full;
 
-	// console.log(links?.download_location);
-
 	const photo = {
 		id,
 		alt_description,
@@ -42,7 +40,7 @@ export const ImageCard = ({
 	};
 
 	const onDownloadImage = () => {
-		saveAs(urlImage, 'image.jpg');
+		saveAs(imageFull || urlImage, 'image.jpg');
 	};
 
 	const isPhotoFav = existPhotoId(id);
