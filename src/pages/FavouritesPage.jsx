@@ -6,10 +6,12 @@ import {
 	Navbar,
 	VoidFavs,
 } from '../components';
+import { UpArrow } from '../components/UI';
+import { useRef } from 'react';
 
 export const FavouritesPage = () => {
 	const { status } = useSelector(state => state.auth);
-	const { photoFavs, isSaving } = useSelector(state => state.photojam);
+	const { photoFavs} = useSelector(state => state.photojam);
 
 	return (
 		<>
@@ -27,6 +29,7 @@ export const FavouritesPage = () => {
 						<FavouritesMessage />
 					)}
 				</section>
+				<UpArrow />
 			</div>
 
 			<Footer />

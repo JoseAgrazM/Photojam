@@ -1,10 +1,12 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Footer, ImageGrid, Navbar, Spinner } from '../components';
-import { useFetch, useSearch } from '../hooks';
-import queryString from 'query-string';
 import { useEffect, useMemo, useState } from 'react';
-import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
+import { useLocation, useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useFetch, useSearch } from '../hooks';
+
+import { Footer, ImageGrid, Navbar, Spinner } from '../components';
+import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
+import { UpArrow } from '../components/UI';
 
 export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
@@ -64,6 +66,7 @@ export const PhotoPage = () => {
 			setPage(page => page + 1);
 		}
 	};
+	const totalPage = data?.total_pages;
 
 	return (
 		<>
@@ -99,18 +102,18 @@ export const PhotoPage = () => {
 					Send
 				</button>
 			</form>
-
 			<InfiniteScroll
 				dataLength={allImages.length}
 				next={fetchMoreData}
 				hasMore={true}
-				loader={<LoaderImage />}
+				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				{console.log(allImages, page)}
 				<section className='flex flex-col min-h-screen'>
 					<ImageGrid images={allImages} />
 				</section>
 			</InfiniteScroll>
+			<UpArrow />
 			<Footer />
 		</>
 	);
