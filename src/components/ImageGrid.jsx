@@ -9,7 +9,7 @@ export const ImageGrid = ({ images, isLoading }) => {
 				<span className='flex items-center justify-center m-16'>
 					<Spinner />
 				</span>
-			) : isLoading !== true && !images ? (
+			) : !isLoading && !images ? (
 				<SearchImages />
 			) : images.length === 0 ? (
 				<NotFound />

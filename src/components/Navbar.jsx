@@ -5,9 +5,9 @@ import { startLogout } from '../photojam/store/auth';
 import { ToggleMenu } from './UI/ToggleMenu';
 
 export const Navbar = () => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { status, displayName } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const location = useLocation();
 
 	const onLogout = () => {
@@ -73,20 +73,20 @@ export const Navbar = () => {
 							<img
 								className='size-7 items-center'
 								src='assets/logout-svgrepo-com.svg'
-								alt=''
+								alt='logout'
 							/>
 						</button>
 					</div>
 				) : (
 					<div className='flex gap-2'>
 						<NavLink
-							className='bg-indigo-700 py-1 px-3 rounded'
+							className='text-blue-200 border-2 border-blue-400 py-1 px-2 rounded hover:bg-blue-700 hover:border-blue-700 hover:text-white'
 							to='/auth/login'
 						>
 							Login
 						</NavLink>
 						<NavLink
-							className='bg-indigo-500 py-1 px-3 rounded'
+							className='bg-blue-600 py-1 px-2 rounded hover:bg-blue-800'
 							to='/auth/register'
 						>
 							Register
@@ -131,16 +131,24 @@ export const Navbar = () => {
 							<img
 								className='size-7 items-center'
 								src='assets/logout-svgrepo-com.svg'
-								alt=''
+								alt='logout'
 							/>
 						</button>
 					</div>
 				) : (
 					<div className='flex flex-row gap-2'>
-						<NavLink className='bg-slate-600' to='/auth/login'>
+						<NavLink
+							className='text-blue-200 border-2 border-blue-400 py-1 px-2 rounded hover:bg-blue-700 hover:border-blue-700 hover:text-white'
+							to='/auth/login'
+						>
 							Login
 						</NavLink>
-						<NavLink to='/auth/register'>Register</NavLink>
+						<NavLink
+							className='bg-blue-600 py-1 px-2 rounded hover:bg-blue-800'
+							to='/auth/register'
+						>
+							Register
+						</NavLink>
 					</div>
 				)}
 			</div>

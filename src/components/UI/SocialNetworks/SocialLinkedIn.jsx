@@ -3,13 +3,10 @@ export const SocialLinkedIn = () => {
 		<div className='group relative'>
 			<a target='_blank' href='https://linkedin.com/in/jose-agraz'>
 				<svg
-					stroke-linejoin='round'
-					stroke-linecap='round'
-					stroke-width='2'
 					stroke='white'
 					fill='none'
 					viewBox='0 0 24 24'
-					class='w-8 hover:scale-125 duration-200 '
+					className='w-8 hover:scale-125 duration-200 '
 				>
 					<path
 						d='M6.5 8C7.32843 8 8 7.32843 8 6.5C8 5.67157 7.32843 5 6.5 5C5.67157 5 5 5.67157 5 6.5C5 7.32843 5.67157 8 6.5 8Z'

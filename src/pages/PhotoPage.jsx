@@ -108,7 +108,6 @@ export const PhotoPage = () => {
 				hasMore={true}
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
-				{console.log(allImages, page)}
 				<section className='flex flex-col min-h-screen'>
 					<ImageGrid images={allImages} />
 				</section>

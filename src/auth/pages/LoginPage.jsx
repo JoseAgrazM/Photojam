@@ -1,11 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LayoutAuth } from '../Layouts/LayoutAuth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks';
 import {
 	startGoogleSingIn,
 	startLoginUserWithEmail,
 } from '../../photojam/store/auth';
+import { useMemo } from 'react';
 
 const formData = {
 	email: '',
@@ -13,11 +14,13 @@ const formData = {
 };
 
 export const LoginPage = () => {
-	const navigate = useNavigate();
+	const { status, errorMessage } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
 	const { formState, isFormValid, email, password, onInputChange } =
 		useForm(formData);
+
+	const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
 	const onSubmit = async event => {
 		event.preventDefault();
@@ -62,16 +65,28 @@ export const LoginPage = () => {
 								onChange={onInputChange}
 							/>
 						</div>
+
+						{!!errorMessage && (
+							<span className='font-medium text-red-700'>
+								{errorMessage}
+							</span>
+						)}
+						
 					</div>
 
 					<div className='max-sm:flex-col flex items-center justify-between gap-9 mt-6'>
 						<div className='text-white font-medium bg-indigo-700 hover:bg-indigo-800 py-3 rounded'>
-							<button className='w-48 h-7' type='submit'>
+							<button
+								disabled={isAuthenticating}
+								className='w-48 h-7'
+								type='submit'
+							>
 								LOGIN
 							</button>
 						</div>
 						<div className='text-white font-medium bg-indigo-700  hover:bg-indigo-800 py-3 rounded'>
 							<button
+								disabled={isAuthenticating}
 								onClick={onGoogleSingin}
 								className='flex justify-center items-center gap-1 w-48 h-7'
 							>
@@ -88,14 +103,8 @@ export const LoginPage = () => {
 
 			<div className='flex justify-center items-center '>
 				<Link
-					to='/'
-					className='text-lg font-medium text-black-900 mb-5 underline underline-offset-4 left-10 absolute'
-				>
-					Go Home
-				</Link>
-				<Link
 					to='/auth/register'
-					className='text-lg font-medium text-blue-900 mb-5 underline underline-offset-4'
+					className='text-lg font-medium text-gray-100 mb-5 underline underline-offset-4'
 				>
 					Create account
 				</Link>
