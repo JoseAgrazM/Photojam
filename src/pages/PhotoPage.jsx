@@ -7,6 +7,7 @@ import { useFetch, useSearch } from '../hooks';
 import { Footer, ImageGrid, Navbar, Spinner } from '../components';
 import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
 import { UpArrow } from '../components/UI';
+import { getUrl } from '../helpers';
 
 export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
@@ -22,40 +23,33 @@ export const PhotoPage = () => {
 		imageSearch: q,
 	});
 
-	const fetchUrl = useMemo(
-		() =>
-			`${import.meta.env.VITE_URL}?query=${q || null}&client_id=${
-				import.meta.env.VITE_ACCESS_KEY
-			}&page=${page}`,
-		[q, page]
-	);
-
-	const { data, isLoading, hasError, error } = useFetch(fetchUrl);
+	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
 
 	useEffect(() => {
-		if (data?.results) {
-			setAllImages(prevImages =>
-				page === 1
-					? [...data.results]
-					: [
-							...prevImages,
-							...data.results.filter(
-								newImage =>
-									!prevImages.some(
-										prevImage =>
-											prevImage.id === newImage.id
-									)
-							),
-					  ]
-			);
-			setIsLoadingMore(false);
-		}
+		if (!data) return;
+
+		const newImages = data?.results || data;
+		setAllImages(prevImages => {
+			if (page === 1) {
+				return [...newImages];
+			} else {
+				const uniqueNewImages = newImages.filter(
+					newImage =>
+						!prevImages.some(
+							prevImage => prevImage.id === newImage.id
+						)
+				);
+				return [...prevImages, ...uniqueNewImages];
+			}
+		});
+		setIsLoadingMore(false);
 	}, [data, page]);
 
 	const onSubmit = e => {
 		e.preventDefault();
-		if (imageSearch.trim() === '') return;
-		navigate(`?q=${imageSearch.trim()}`);
+		imageSearch.trim() === ''
+			? navigate(`/`)
+			: navigate(`?q=${imageSearch.trim()}`);
 		setPage(1);
 		setAllImages([]);
 	};
@@ -66,7 +60,8 @@ export const PhotoPage = () => {
 			setPage(page => page + 1);
 		}
 	};
-	const totalPage = data?.total_pages;
+
+	const totalPage = useMemo(() => data?.total_pages, [data]);
 
 	return (
 		<>
@@ -82,9 +77,9 @@ export const PhotoPage = () => {
 						</span>
 					) : (
 						<img
-							className='w-8 '
+							className='w-8'
 							src='assets/search-alt-svgrepo-com.svg'
-							alt=''
+							alt='Search Icon'
 						/>
 					)}
 				</figure>
@@ -105,7 +100,7 @@ export const PhotoPage = () => {
 			<InfiniteScroll
 				dataLength={allImages.length}
 				next={fetchMoreData}
-				hasMore={true}
+				hasMore={page < totalPage}
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				<section className='flex flex-col min-h-screen'>

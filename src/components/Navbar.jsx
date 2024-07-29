@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { startLogout } from '../photojam/store/auth';
 import { ToggleMenu } from './UI/ToggleMenu';
+import { nameCapitalized } from '../helpers';
 
 export const Navbar = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,6 +21,8 @@ export const Navbar = () => {
 
 	const isHome = location.pathname === '/';
 	const isFavs = location.pathname === '/favs';
+
+	const displayNameCapitalized = nameCapitalized(displayName);
 
 	return (
 		<nav className='bg-slate-950 p-4'>
@@ -67,7 +70,9 @@ export const Navbar = () => {
 				</ul>
 				{status === 'authenticated' ? (
 					<div className='flex gap-2'>
-						<button className='font-medium'>{displayName}</button>
+						<button className='font-medium'>
+							{displayNameCapitalized}
+						</button>
 						<span>|</span>
 						<button onClick={onLogout}>
 							<img
