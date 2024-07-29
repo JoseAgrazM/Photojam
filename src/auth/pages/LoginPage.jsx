@@ -65,13 +65,11 @@ export const LoginPage = () => {
 								onChange={onInputChange}
 							/>
 						</div>
-
 						{!!errorMessage && (
 							<span className='font-medium text-red-700'>
 								{errorMessage}
 							</span>
 						)}
-						
 					</div>
 
 					<div className='max-sm:flex-col flex items-center justify-between gap-9 mt-6'>
