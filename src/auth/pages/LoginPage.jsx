@@ -37,9 +37,9 @@ export const LoginPage = () => {
 				onSubmit={onSubmit}
 				className='flex m-10 w-full justify-center'
 			>
-				<div className=''>
+				<div>
 					<div className='flex flex-col gap-3 w-96 items-center'>
-						<div className='flex flex-row items-center w-5/6 h-24 relative pt-2'>
+						<div className='flex flex-row items-center w-full h-24 relative pt-2'>
 							<label className='absolute top-0 text-xl font-medium'>
 								Email
 							</label>
@@ -52,7 +52,7 @@ export const LoginPage = () => {
 								onChange={onInputChange}
 							/>
 						</div>
-						<div className='flex flex-row items-center w-5/6 h-24 relative pt-2'>
+						<div className='flex flex-row items-center w-96 h-24 relative pt-2'>
 							<label className='absolute top-0 text-xl font-medium'>
 								Password
 							</label>

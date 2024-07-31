@@ -53,8 +53,8 @@ export const RegisterPage = () => {
 	return (
 		<LayoutAuth title='Register'>
 			<form className='flex m-10 w-full justify-center'>
-				<div className=''>
-					<div className='flex flex-col gap-2 w-96 items-center'>
+				<div>
+					<section className='flex flex-col gap-2 w-96 items-center'>
 						<div className='flex flex-row items-center w-full h-24 relative pt-2'>
 							<label className='absolute top-0 text-xl font-medium'>
 								Name
@@ -123,7 +123,7 @@ export const RegisterPage = () => {
 								</p>
 							)}
 						</div>
-					</div>
+					</section>
 
 					<div className='max-sm:flex-col flex items-center justify-center mt-6'>
 						<div className='text-white font-medium bg-indigo-700 hover:bg-indigo-800 px-16 py-3 rounded'>
