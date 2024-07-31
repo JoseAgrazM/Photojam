@@ -25,7 +25,7 @@ export const Navbar = () => {
 	const displayNameCapitalized = nameCapitalized(displayName);
 
 	return (
-		<nav className='bg-slate-950 p-4'>
+		<nav className='bg-slate-950 p-4 w-full'>
 			<div className='flex justify-between items-center text-white sm:hidden'>
 				<img
 					className='size-10'
@@ -129,7 +129,11 @@ export const Navbar = () => {
 					</NavLink>
 				</div>
 				{status === 'authenticated' ? (
-					<div className='flex flex-row gap-2'>
+					<div
+						className={`flex flex-row gap-2 ${
+							!isMenuOpen ? 'hidden' : null
+						}`}
+					>
 						<button className='font-medium'>{displayName}</button>
 						<span>|</span>
 						<button onClick={onLogout}>
@@ -141,7 +145,11 @@ export const Navbar = () => {
 						</button>
 					</div>
 				) : (
-					<div className='flex flex-row gap-2'>
+					<div
+						className={`flex flex-row gap-2 ${
+							!isMenuOpen ? 'hidden' : null
+						}`}
+					>
 						<NavLink
 							className='text-blue-200 border-2 border-blue-400 py-1 px-2 rounded hover:bg-blue-700 hover:border-blue-700 hover:text-white'
 							to='/auth/login'

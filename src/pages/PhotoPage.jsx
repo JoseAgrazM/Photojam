@@ -47,9 +47,9 @@ export const PhotoPage = () => {
 
 	const onSubmit = e => {
 		e.preventDefault();
-		imageSearch.trim() === ''
-			? navigate(`/`)
-			: navigate(`?q=${imageSearch.trim()}`);
+		if (imageSearch.trim() === '') return;
+
+		navigate(`?q=${imageSearch.trim()}`);
 		setPage(1);
 		setAllImages([]);
 	};
@@ -68,30 +68,32 @@ export const PhotoPage = () => {
 			<Navbar />
 			<form
 				onSubmit={onSubmit}
-				className='flex gap-3 items-center justify-center mt-8'
+				className='flex flex-row gap-3 items-center justify-center mt-8 max-sm:flex-col '
 			>
-				<figure className='flex flex-col'>
-					{isLoading ? (
-						<span className='flex flex-col items-center w-3 m-3 justify-center'>
-							<Spinner />
-						</span>
-					) : (
-						<img
-							className='w-8'
-							src='assets/search-alt-svgrepo-com.svg'
-							alt='Search Icon'
-						/>
-					)}
-				</figure>
-				<input
-					type='text'
-					name='imageSearch'
-					value={imageSearch}
-					onChange={onInputChange}
-					className='text-2xl rounded'
-				/>
+				<div className='flex gap-3'>
+					<figure className='flex flex-col'>
+						{isLoading ? (
+							<span className='flex flex-col items-center w-3 m-3 justify-center'>
+								<Spinner />
+							</span>
+						) : (
+							<img
+								className='w-8'
+								src='assets/search-alt-svgrepo-com.svg'
+								alt='Search Icon'
+							/>
+						)}
+					</figure>
+					<input
+						type='text'
+						name='imageSearch'
+						value={imageSearch}
+						onChange={onInputChange}
+						className='text-2xl rounded'
+					/>
+				</div>
 				<button
-					className='bg-indigo-600 px-3 py-1 rounded text-white'
+					className='bg-indigo-600 px-3 py-1 rounded text-white max-sm:w-6/12'
 					type='submit'
 				>
 					Send
