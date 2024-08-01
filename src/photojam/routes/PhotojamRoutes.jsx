@@ -7,7 +7,7 @@ export const PhotojamRoutes = () => {
 		<Routes>
 			<Route path='/' element={<PhotoPage />} />
 
-			<Route path='favs' element={<FavouritesPage />} />
+			<Route path='/favs' element={<FavouritesPage />} />
 			<Route path='/*' element={<Navigate to='/' />} />
 		</Routes>
 	);
