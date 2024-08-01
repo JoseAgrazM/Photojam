@@ -31,7 +31,29 @@ export const ImageCard = ({
 		links,
 	};
 
+	const registerSaveImages = () => {
+		const Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 2000,
+			timerProgressBar: true,
+			didOpen: toast => {
+				toast.onmouseenter = Swal.stopTimer;
+				toast.onmouseleave = Swal.resumeTimer;
+			},
+		});
+		Toast.fire({
+			icon: 'info',
+			title: 'Sign up to save to favorites.',
+		});
+	};
+
 	const onAddFav = () => {
+		if (status === 'not-authenticated') {
+			registerSaveImages();
+			return;
+		}
 		dispatch(startAddPhotoFav(photo));
 		const Toast = Swal.mixin({
 			toast: true,
@@ -92,31 +114,29 @@ export const ImageCard = ({
 					src={imageFull || urlImage}
 					alt={alt_description}
 				/>
-				{status === 'authenticated' ? (
-					isPhotoFav ? (
-						<button
-							disabled={isSaving}
-							onClick={onDeleteFav}
-							className={styles.button_heart}
-						>
-							<img
-								src='assets/stuffed-heard.svg'
-								alt='stuffed-heard'
-							/>
-						</button>
-					) : (
-						<button
-							disabled={isSaving}
-							onClick={onAddFav}
-							className={styles.button_heart}
-						>
-							<img
-								src='assets/outline-heart.svg'
-								alt='outline-heart'
-							/>
-						</button>
-					)
-				) : null}
+				{isPhotoFav ? (
+					<button
+						disabled={isSaving}
+						onClick={onDeleteFav}
+						className={styles.button_heart}
+					>
+						<img
+							src='assets/stuffed-heard.svg'
+							alt='stuffed-heard'
+						/>
+					</button>
+				) : (
+					<button
+						disabled={isSaving}
+						onClick={onAddFav}
+						className={styles.button_heart}
+					>
+						<img
+							src='assets/outline-heart.svg'
+							alt='outline-heart'
+						/>
+					</button>
+				)}
 				{/* <button
 					onClick={onViewFullImage}
 					className={styles.button_view}

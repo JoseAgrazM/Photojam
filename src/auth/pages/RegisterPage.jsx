@@ -60,7 +60,7 @@ export const RegisterPage = () => {
 								Name
 							</label>
 							<input
-								placeholder='Juan Garcia'
+								placeholder='Mister Example'
 								className={`rounded w-full p-2 ${
 									!!displayNameValid &&
 									formSubmitted &&
@@ -83,7 +83,7 @@ export const RegisterPage = () => {
 								Email
 							</label>
 							<input
-								placeholder='garcia@google.com'
+								placeholder='example@google.com'
 								className={`rounded w-full p-2 ${
 									!!emailValid &&
 									formSubmitted &&

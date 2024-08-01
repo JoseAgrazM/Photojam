@@ -24,6 +24,7 @@ export const PhotoPage = () => {
 	});
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
+	console.log(data);
 
 	useEffect(() => {
 		if (!data) return;
@@ -48,10 +49,11 @@ export const PhotoPage = () => {
 	const onSubmit = e => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
+		if (imageSearch.trim() === q) return;
 
+		setAllImages([]);
 		navigate(`?q=${imageSearch.trim()}`);
 		setPage(1);
-		setAllImages([]);
 	};
 
 	const fetchMoreData = () => {

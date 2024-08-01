@@ -1,4 +1,4 @@
-import { NotFound, Spinner, SearchImages, ImageCard } from './';
+import { NotFound, Spinner, ImageCard } from './';
 
 import styles from './css/List_images.module.css';
 
@@ -9,8 +9,6 @@ export const ImageGrid = ({ images, isLoading }) => {
 				<figure className='flex items-center justify-center m-16'>
 					<Spinner />
 				</figure>
-			) : images.length === 0 ? (
-				<NotFound />
 			) : (
 				<ul className={styles.list_images}>
 					{images.map(img => (
