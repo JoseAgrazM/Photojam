@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { FavouritesPage, PhotoPage } from '../../pages';
-import { useSelector } from 'react-redux';
 
 export const PhotojamRoutes = () => {
 
