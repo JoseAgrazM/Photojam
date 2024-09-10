@@ -24,7 +24,6 @@ export const PhotoPage = () => {
 	});
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
-	console.log(data);
 
 	useEffect(() => {
 		if (!data) return;
@@ -91,15 +90,15 @@ export const PhotoPage = () => {
 						name='imageSearch'
 						value={imageSearch}
 						onChange={onInputChange}
-						className='text-2xl rounded'
+						className='text-2xl rounded w-full'
 					/>
 				</div>
-				<button
+				{/* <button
 					className='bg-indigo-600 px-3 py-1 rounded text-white max-sm:w-6/12'
 					type='submit'
 				>
 					Send
-				</button>
+				</button> */}
 			</form>
 			<InfiniteScroll
 				dataLength={allImages.length}
