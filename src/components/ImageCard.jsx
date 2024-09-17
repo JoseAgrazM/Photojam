@@ -5,6 +5,8 @@ import { existPhotoId } from '../helpers';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 export const ImageCard = ({
 	alt_description,
 	alternative_slugs, // alternative_slugs.es || alternative_slugs.en
@@ -22,7 +24,10 @@ export const ImageCard = ({
 	const { status } = useSelector(state => state.auth);
 	const { isSaving } = useSelector(state => state.photojam);
 
-	const imageFull = urls?.full;
+	// const imageFull = urls?.full;
+	const imageFull = urls?.raw ? `${urls?.raw}?w=400&fm=webp` : undefined;
+	console.log(imageFull);
+	console.log(urlImage);
 
 	const photo = {
 		id,
@@ -90,15 +95,15 @@ export const ImageCard = ({
 		});
 	};
 
-	const onViewFullImage = () => {
-		Swal.fire({
-			imageUrl: imageFull || urlImage,
-			imageWidth: 480,
-			imageHeight: 480,
-			imageAlt: alt_description,
-			background: '#ffffffb3',
-		});
-	};
+	// const onViewFullImage = () => {
+	// 	Swal.fire({
+	// 		imageUrl: imageFull || urlImage,
+	// 		imageWidth: 480,
+	// 		imageHeight: 480,
+	// 		imageAlt: alt_description,
+	// 		background: '#ffffffb3',
+	// 	});
+	// };
 
 	const onDownloadImage = () => {
 		saveAs(imageFull || urlImage, 'image.jpg');
@@ -113,6 +118,7 @@ export const ImageCard = ({
 					className={styles.image}
 					src={imageFull || urlImage}
 					alt={alt_description}
+					loading='lazy'
 				/>
 				{isPhotoFav ? (
 					<button

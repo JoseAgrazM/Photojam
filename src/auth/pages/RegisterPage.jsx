@@ -83,13 +83,14 @@ export const RegisterPage = () => {
 								Email
 							</label>
 							<input
+								autoComplete='email'
 								placeholder='example@google.com'
 								className={`rounded w-full p-2 ${
 									!!emailValid &&
 									formSubmitted &&
 									'border-2 border-rose-600'
 								}`}
-								type='text'
+								type='email'
 								name='email'
 								value={email}
 								onChange={onInputChange}

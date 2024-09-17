@@ -45,11 +45,19 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
 		}
 	};
 
+	const testAccount = (email, password) => {
+		setFormState({
+			email: email,
+			password: password,
+		});
+	};
+
 	return {
 		...formState,
 		formState,
 		onInputChange,
 		onResetForm,
+		testAccount,
 
 		...formValidation,
 		isFormValid,

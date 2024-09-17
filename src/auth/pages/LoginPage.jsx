@@ -17,8 +17,14 @@ export const LoginPage = () => {
 	const { status, errorMessage } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
-	const { formState, isFormValid, email, password, onInputChange } =
-		useForm(formData);
+	const {
+		formState,
+		isFormValid,
+		email,
+		password,
+		onInputChange,
+		testAccount,
+	} = useForm(formData);
 
 	const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
@@ -29,6 +35,10 @@ export const LoginPage = () => {
 
 	const onGoogleSingin = () => {
 		dispatch(startGoogleSingIn());
+	};
+
+	const onTestAccount = () => {
+		testAccount('testaccount@google.com', '123456');
 	};
 
 	return (
@@ -44,9 +54,10 @@ export const LoginPage = () => {
 								Email
 							</label>
 							<input
+								autoComplete='email'
 								placeholder='example@google.com'
 								className='rounded w-full p-2'
-								type='text'
+								type='email'
 								name='email'
 								value={email}
 								onChange={onInputChange}
@@ -99,13 +110,19 @@ export const LoginPage = () => {
 				</div>
 			</form>
 
-			<div className='flex justify-center items-center '>
+			<div className='flex w-full px-10 justify-between items-center '>
 				<Link
 					to='/auth/register'
 					className='text-lg font-medium text-gray-100 mb-5 underline underline-offset-4'
 				>
 					Create account
 				</Link>
+				<button
+					onClick={onTestAccount}
+					className='text-lg font-medium text-gray-100 mb-5 underline underline-offset-4'
+				>
+					Test Account
+				</button>
 			</div>
 		</LayoutAuth>
 	);
