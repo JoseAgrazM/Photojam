@@ -8,6 +8,7 @@ import { Footer, ImageGrid, Navbar, Spinner } from '../components';
 import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
 import { UpArrow } from '../components/UI';
 import { getUrl } from '../helpers';
+import { TooManyRequest } from '../components/TooManyRequest';
 
 export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
@@ -86,6 +87,7 @@ export const PhotoPage = () => {
 						)}
 					</figure>
 					<input
+						autoComplete='text'
 						type='text'
 						name='imageSearch'
 						value={imageSearch}
@@ -107,7 +109,11 @@ export const PhotoPage = () => {
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				<section className='flex flex-col min-h-screen'>
-					<ImageGrid images={allImages} />
+					{allImages.length > 0 ? (
+						<ImageGrid images={allImages} />
+					) : (
+						<TooManyRequest />
+					)}
 				</section>
 			</InfiniteScroll>
 			<UpArrow />

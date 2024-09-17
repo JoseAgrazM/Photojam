@@ -68,6 +68,7 @@ export const LoginPage = () => {
 								Password
 							</label>
 							<input
+								autoComplete='current-password'
 								placeholder='password123 '
 								className='rounded w-full p-2'
 								type='password'

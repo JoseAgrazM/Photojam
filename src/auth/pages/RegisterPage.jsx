@@ -60,6 +60,7 @@ export const RegisterPage = () => {
 								Name
 							</label>
 							<input
+								autoComplete='username'
 								placeholder='Mister Example'
 								className={`rounded w-full p-2 ${
 									!!displayNameValid &&
@@ -107,6 +108,7 @@ export const RegisterPage = () => {
 								Password
 							</label>
 							<input
+								autoComplete='current-password'
 								placeholder='Password'
 								className={`rounded w-full p-2 ${
 									!!passwordValid &&

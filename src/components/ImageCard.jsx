@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const ImageCard = ({
 	alt_description,
@@ -26,8 +27,6 @@ export const ImageCard = ({
 
 	// const imageFull = urls?.full;
 	const imageFull = urls?.raw ? `${urls?.raw}?w=400&fm=webp` : undefined;
-	console.log(imageFull);
-	console.log(urlImage);
 
 	const photo = {
 		id,
@@ -120,6 +119,7 @@ export const ImageCard = ({
 					alt={alt_description}
 					loading='lazy'
 				/>
+
 				{isPhotoFav ? (
 					<button
 						disabled={isSaving}
