@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFetch, useSearch } from '../hooks';
 
-import { Footer, ImageGrid, Navbar, Spinner } from '../components';
+import { Footer, ImageGrid, Navbar, NotFound, Spinner } from '../components';
 import { LoaderImage } from '../components/UI/loaderImage/LoaderImage';
 import { UpArrow } from '../components/UI';
 import { getUrl } from '../helpers';
@@ -14,6 +14,9 @@ export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
 	const [allImages, setAllImages] = useState([]);
 	const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+	const [hasImages, setHasImages] = useState(false);
+	const [showPlaceholder, setShowPlaceholder] = useState(false);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -25,6 +28,18 @@ export const PhotoPage = () => {
 	});
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (allImages.length === 0) {
+				setShowPlaceholder(true);
+			} else {
+				setHasImages(true);
+			}
+		}, 1500);
+
+		return () => clearTimeout(timer);
+	}, [allImages]);
 
 	useEffect(() => {
 		if (!data) return;
@@ -109,10 +124,12 @@ export const PhotoPage = () => {
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				<section className='flex flex-col min-h-screen'>
-					{allImages.length > 0 ? (
+					{showPlaceholder ? (
+						<NotFound />
+					) : hasImages ? (
 						<ImageGrid images={allImages} />
 					) : (
-						<TooManyRequest />
+						<LoaderImage />
 					)}
 				</section>
 			</InfiniteScroll>
