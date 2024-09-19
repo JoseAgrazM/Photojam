@@ -39,6 +39,11 @@
 		transform: scale(1);
 		transition: 1s;
 	}
+	& .button_heart:active {
+		transform: scale(0.8);
+		transition: 0.1s;
+	}
+
 	& .button_download {
 		display: flex;
 		position: absolute;
@@ -49,6 +54,11 @@
 		transform: scale(1);
 		transition: 1s;
 	}
+	& .button_download:active {
+		transform: scale(0.8);
+		transition: 0.1s;
+	}
+
 	& .button_view {
 		display: flex;
 		position: absolute;
@@ -82,4 +92,13 @@
 	height: 100%;
 	object-fit: cover;
 	grid-area: show;
+}
+
+.figure_Mobile {
+	content: '';
+	width: 350px;
+	height: 350px;
+	background-color: rgba(0, 0, 0, 0.3);
+	grid-area: show;
+	z-index: 10;
 }

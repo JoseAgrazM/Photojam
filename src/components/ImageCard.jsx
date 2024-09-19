@@ -5,9 +5,6 @@ import { existPhotoId } from '../helpers';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-
 export const ImageCard = ({
 	alt_description,
 	alternative_slugs, // alternative_slugs.es || alternative_slugs.en
@@ -25,14 +22,15 @@ export const ImageCard = ({
 	const { status } = useSelector(state => state.auth);
 	const { isSaving } = useSelector(state => state.photojam);
 
-	// const imageFull = urls?.full;
-	const imageFull = urls?.raw ? `${urls?.raw}?w=400&fm=webp` : undefined;
+	const imageFullDownload = urls?.full;
+
+	const image = urls?.raw ? `${urls?.raw}&q=80&w=400` : undefined;
 
 	const photo = {
 		id,
 		alt_description,
-		imageFull,
-		links,
+		image,
+		imageFullDownload,
 	};
 
 	const registerSaveImages = () => {
@@ -75,7 +73,7 @@ export const ImageCard = ({
 			title: 'Image saved successfully.',
 		});
 	};
-	const onDeleteFav = e => {
+	const onDeleteFav = () => {
 		dispatch(startDeleteFavs(id));
 		const Toast = Swal.mixin({
 			toast: true,
@@ -96,7 +94,7 @@ export const ImageCard = ({
 
 	// const onViewFullImage = () => {
 	// 	Swal.fire({
-	// 		imageUrl: imageFull || urlImage,
+	// 		imageUrl: image || urlImage,
 	// 		imageWidth: 480,
 	// 		imageHeight: 480,
 	// 		imageAlt: alt_description,
@@ -105,17 +103,17 @@ export const ImageCard = ({
 	// };
 
 	const onDownloadImage = () => {
-		saveAs(imageFull || urlImage, 'image.jpg');
+		saveAs(imageFullDownload || urlDownload, 'image.jpg');
 	};
 
 	const isPhotoFav = existPhotoId(id);
 
 	return (
 		<>
-			<figure className={styles.figure}>
+			<figure className={`${styles.figure_Mobile} ${styles.figure}`}>
 				<img
 					className={styles.image}
-					src={imageFull || urlImage}
+					src={image || urlImage}
 					alt={alt_description}
 					loading='lazy'
 				/>
@@ -151,7 +149,7 @@ export const ImageCard = ({
 				</button> */}
 				<button
 					onClick={onDownloadImage}
-					className={styles.button_download}
+					className={`${styles.button_download}`}
 				>
 					<img src='assets/download-svgrepo-com.svg' alt='download' />
 				</button>

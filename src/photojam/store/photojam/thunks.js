@@ -8,7 +8,12 @@ import {
 import { FirebaseDB } from '../../../firebase';
 import { loadPhotosFavs } from '../../../helpers';
 
-export const startAddPhotoFav = ({ id, alt_description, imageFull, links }) => {
+export const startAddPhotoFav = ({
+	id,
+	alt_description,
+	image,
+	imageFullDownload,
+}) => {
 	return async (dispatch, getState) => {
 		dispatch(savingPhotoFav());
 
@@ -17,8 +22,8 @@ export const startAddPhotoFav = ({ id, alt_description, imageFull, links }) => {
 		const newPhoto = {
 			id: id,
 			title: alt_description,
-			urlImage: imageFull,
-			urlDownload: links.download_location,
+			urlImage: image,
+			urlDownload: imageFullDownload,
 			date: new Date().getTime(),
 		};
 
