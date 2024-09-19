@@ -111,7 +111,7 @@ export const PhotoPage = () => {
 				hasMore={page < totalPage}
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
-				<section className='flex flex-col min-h-screen'>
+				<section className='overflow-hidden flex flex-col min-h-screen'>
 					{<ImageGrid images={allImages} />}
 				</section>
 			</InfiniteScroll>
