@@ -119,6 +119,7 @@ export const LoginPage = () => {
 					Create account
 				</Link>
 				<button
+					type='submit'
 					onClick={onTestAccount}
 					className='text-lg font-medium text-gray-100 mb-5 underline underline-offset-4'
 				>

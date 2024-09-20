@@ -4,10 +4,16 @@ import queryString from 'query-string';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFetch, useSearch } from '../hooks';
 
-import { Footer, ImageGrid, Navbar, NotFound, Spinner } from '../components';
+import {
+	Error403,
+	Error404,
+	Footer,
+	ImageGrid,
+	Navbar,
+	Spinner,
+} from '../components';
 import { LoaderImage, UpArrow } from '../components/UI';
 import { getUrl } from '../helpers';
-import { TooManyRequest } from '../components/TooManyRequest';
 
 export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
@@ -27,6 +33,8 @@ export const PhotoPage = () => {
 	});
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
+
+	console.log({ hasError, error });
 
 	useEffect(() => {
 		if (!data) return;
@@ -112,7 +120,15 @@ export const PhotoPage = () => {
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				<section className='overflow-hidden flex flex-col min-h-screen'>
-					{<ImageGrid images={allImages} />}
+					{!hasError && <ImageGrid images={allImages} />}
+
+					{hasError && error.code === 404 ? (
+						<Error404 />
+					) : hasError && error.code === 403 ? (
+						<Error403 />
+					) : (
+						<span>{error?.message}</span>
+					)}
 				</section>
 			</InfiniteScroll>
 			<UpArrow />

@@ -1,4 +1,4 @@
-export const NotFound = () => {
+export const Error404 = () => {
 	return (
 		<figure className='flex justify-center items-center mt-16'>
 			<img

@@ -1,4 +1,4 @@
-import { NotFound, Spinner, ImageCard } from './';
+import { Spinner, ImageCard } from './';
 
 import styles from './css/List_images.module.css';
 

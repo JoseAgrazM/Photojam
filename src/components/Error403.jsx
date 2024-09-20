@@ -1,4 +1,4 @@
-export const TooManyRequest = () => {
+export const Error403 = () => {
 	return (
 		<>
 			<figure className='flex flex-col gap-16 items-center justify-center h-screen'>
@@ -9,7 +9,7 @@ export const TooManyRequest = () => {
 				<img
 					className='w-96'
 					src='assets/undraw_season_change_f99v.svg'
-					alt=''
+					alt='woman with clock'
 				/>
 			</figure>
 		</>
