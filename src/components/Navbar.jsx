@@ -103,7 +103,7 @@ export const Navbar = () => {
 				className={`sm:hidden flex flex-col items-center text-white transition-all duration-500 ease-in-out ${
 					isMenuOpen
 						? 'max-h-[300px] opacity-100'
-						: 'max-h-0 opacity-0'
+						: 'max-h-0 opacity-0 hidden'
 				}`}
 			>
 				<div className='flex flex-col gap-3 mb-6'>

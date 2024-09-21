@@ -20,9 +20,6 @@ export const PhotoPage = () => {
 	const [allImages, setAllImages] = useState([]);
 	const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-	const [hasImages, setHasImages] = useState(false);
-	const [showPlaceholder, setShowPlaceholder] = useState(false);
-
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -33,8 +30,6 @@ export const PhotoPage = () => {
 	});
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
-
-	console.log({ hasError, error });
 
 	useEffect(() => {
 		if (!data) return;
@@ -74,7 +69,6 @@ export const PhotoPage = () => {
 	};
 
 	const totalPage = useMemo(() => data?.total_pages, [data]);
-
 	return (
 		<>
 			<Navbar />
@@ -122,13 +116,8 @@ export const PhotoPage = () => {
 				<section className='overflow-hidden flex flex-col min-h-screen'>
 					{!hasError && <ImageGrid images={allImages} />}
 
-					{hasError && error.code === 404 ? (
-						<Error404 />
-					) : hasError && error.code === 403 ? (
-						<Error403 />
-					) : (
-						<span>{error?.message}</span>
-					)}
+					{!hasError && allImages.length < 1 && <Error404 />}
+					{hasError && error.code === 403 && <Error403 />}
 				</section>
 			</InfiniteScroll>
 			<UpArrow />
