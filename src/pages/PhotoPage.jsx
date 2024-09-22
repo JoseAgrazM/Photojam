@@ -32,6 +32,10 @@ export const PhotoPage = () => {
 
 	const { data, isLoading, hasError, error } = useFetch(getUrl(q, page));
 
+	const totalPage = useMemo(() => data?.total_pages, [data]);
+	const isError404 = delayedError404 && allImages.length <= 0 && !hasError;
+	const isError403 = hasError && error.code === 403;
+
 	useEffect(() => {
 		if (!data) return;
 
@@ -82,9 +86,6 @@ export const PhotoPage = () => {
 		}
 	};
 
-	const totalPage = useMemo(() => data?.total_pages, [data]);
-	const isError404 = delayedError404 && allImages.length <= 0 && !hasError;
-
 	return (
 		<>
 			<Navbar />
@@ -133,7 +134,7 @@ export const PhotoPage = () => {
 					{<ImageGrid images={allImages} />}
 
 					{isError404 && <Error404 />}
-					{hasError && error.code === 403 && <Error403 />}
+					{isError403 && <Error403 />}
 				</section>
 			</InfiniteScroll>
 			<UpArrow />
