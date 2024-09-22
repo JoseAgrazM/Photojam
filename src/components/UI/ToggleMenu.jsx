@@ -1,6 +1,4 @@
 export const ToggleMenu = ({ isOpen, toggleMenu }) => {
-	console.log({isOpen});
-	
 	return (
 		<div
 			className='flex flex-col gap-2 w-8 cursor-pointer'

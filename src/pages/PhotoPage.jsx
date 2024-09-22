@@ -19,6 +19,7 @@ export const PhotoPage = () => {
 	const [page, setPage] = useState(1);
 	const [allImages, setAllImages] = useState([]);
 	const [isLoadingMore, setIsLoadingMore] = useState(false);
+	const [delayedError404, setDelayedError404] = useState(false);
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -51,6 +52,19 @@ export const PhotoPage = () => {
 		setIsLoadingMore(false);
 	}, [data, page]);
 
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (!hasError && allImages.length < 1) {
+				setDelayedError404(true);
+			}
+		}, 500);
+
+		return () => clearTimeout(timer);
+	}, [allImages, hasError]);
+
+	console.log({ allImages });
+	console.log(allImages.length <= 0);
+
 	const onSubmit = e => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
@@ -69,6 +83,8 @@ export const PhotoPage = () => {
 	};
 
 	const totalPage = useMemo(() => data?.total_pages, [data]);
+	const isError404 = delayedError404 && allImages.length <= 0 && !hasError;
+
 	return (
 		<>
 			<Navbar />
@@ -114,9 +130,9 @@ export const PhotoPage = () => {
 				loader={page < totalPage ? <LoaderImage /> : ''}
 			>
 				<section className='overflow-hidden flex flex-col min-h-screen'>
-					{!hasError && <ImageGrid images={allImages} />}
+					{<ImageGrid images={allImages} />}
 
-					{!hasError && allImages.length < 1 && <Error404 />}
+					{isError404 && <Error404 />}
 					{hasError && error.code === 403 && <Error403 />}
 				</section>
 			</InfiniteScroll>
