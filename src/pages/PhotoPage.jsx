@@ -66,9 +66,6 @@ export const PhotoPage = () => {
 		return () => clearTimeout(timer);
 	}, [allImages, hasError]);
 
-	console.log({ allImages });
-	console.log(allImages.length <= 0);
-
 	const onSubmit = e => {
 		e.preventDefault();
 		if (imageSearch.trim() === '') return;
