@@ -61,7 +61,7 @@ export const PhotoPage = () => {
 			if (!hasError && allImages.length < 1) {
 				setDelayedError404(true);
 			}
-		}, 500);
+		}, 3000);
 
 		return () => clearTimeout(timer);
 	}, [allImages, hasError]);
