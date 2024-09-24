@@ -57,12 +57,13 @@ export const PhotoPage = () => {
 	}, [data, page]);
 
 	useEffect(() => {
+		setDelayedError404(false);
+
 		const timer = setTimeout(() => {
 			if (!hasError && allImages.length < 1) {
 				setDelayedError404(true);
 			}
 		}, 3000);
-
 		return () => clearTimeout(timer);
 	}, [allImages, hasError]);
 
