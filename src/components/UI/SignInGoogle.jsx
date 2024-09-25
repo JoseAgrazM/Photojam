@@ -1,6 +1,9 @@
+import { useDispatch } from 'react-redux';
 import { startGoogleSingIn } from '../../photojam/store/auth';
 
 export const SignInGoogle = ({ isAuthenticating }) => {
+	const dispatch = useDispatch();
+
 	const onGoogleSingin = () => {
 		dispatch(startGoogleSingIn());
 	};
