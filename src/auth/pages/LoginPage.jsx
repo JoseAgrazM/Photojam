@@ -2,11 +2,9 @@ import { Link } from 'react-router-dom';
 import { LayoutAuth } from '../Layouts/LayoutAuth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks';
-import {
-	startGoogleSingIn,
-	startLoginUserWithEmail,
-} from '../../photojam/store/auth';
+import { startLoginUserWithEmail } from '../../photojam/store/auth';
 import { useMemo } from 'react';
+import { SignInGoogle } from '../../components/UI';
 
 const formData = {
 	email: '',
@@ -33,9 +31,9 @@ export const LoginPage = () => {
 		dispatch(startLoginUserWithEmail(formState));
 	};
 
-	const onGoogleSingin = () => {
-		dispatch(startGoogleSingIn());
-	};
+	// const onGoogleSingin = () => {
+	// 	dispatch(startGoogleSingIn());
+	// };
 
 	const onTestAccount = () => {
 		testAccount('testaccount@google.com', '123456');
@@ -94,19 +92,7 @@ export const LoginPage = () => {
 								LOGIN
 							</button>
 						</div>
-						<div className='text-white font-medium bg-indigo-700  hover:bg-indigo-800 py-3 rounded'>
-							<button
-								disabled={isAuthenticating}
-								onClick={onGoogleSingin}
-								className='flex justify-center items-center gap-1 w-48 h-7'
-							>
-								<img
-									className='size-7'
-									src='/assets/login/google-svgrepo-com.svg'
-								/>
-								GOOGLE
-							</button>
-						</div>
+						<SignInGoogle />
 					</div>
 				</div>
 			</form>

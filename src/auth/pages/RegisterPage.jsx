@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from '../../hooks';
 import {} from '../../firebase/providers';
 import { startCreatingUserWithEmailPassword } from '../../photojam/store/auth/thunks';
+import { SignInGoogle } from '../../components/UI';
 
 const formData = {
 	displayName: '',
@@ -128,10 +129,11 @@ export const RegisterPage = () => {
 						</div>
 					</section>
 
-					<div className='max-sm:flex-col flex items-center justify-center mt-6'>
+					<div className='max-sm:flex-col flex items-center justify-between gap-9 mt-6'>
 						<div className='text-white font-medium bg-indigo-700 hover:bg-indigo-800 px-16 py-3 rounded'>
 							<button onClick={onSubmit}>SIGN UP</button>
 						</div>
+						<SignInGoogle />
 					</div>
 				</div>
 			</form>
